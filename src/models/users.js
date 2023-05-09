@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const collection = 'Estudiantes';
+const collection = 'Users';
 
 const schema = new mongoose.Schema({
     nombre:{
@@ -19,16 +19,8 @@ const schema = new mongoose.Schema({
         type:String,
         required:true,
         unique:true
-    },
-    curso:{
-        type:String,
-        required:true
-    },
-    nota:{
-        type:Number,
-        required:true
     }
 })
 
-const studentsModel = mongoose.model(collection,schema);
-export default studentsModel;
+const usersModel = mongoose.model(collection,schema);
+export default usersModel;

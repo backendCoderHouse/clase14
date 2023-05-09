@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import studentsModel from './models/estudiantes.js';
+import usersModel from './models/users.js';
 
 const app = express();
 const PORT = process.env.PORT||8080;
@@ -9,111 +9,89 @@ const server = app.listen(PORT,()=>console.log(`Listening on ${PORT}`));
 const connection = mongoose.connect(`URL DE MONGO AQUÍ`)
 app.use(express.json());
 
-const students = [{
+const users = [{
     "nombre": "Steffen",
     "apellido": "Terzo",
     "edad": 36,
-    "dni":"15691240",
-    "curso":"Programación Backend",
-    "nota":9
+    "dni":"15691240"
   }, {
     "nombre": "Jorgan",
     "apellido": "Matthis",
     "edad": 27,
-    "dni":"29358120",
-    "curso":"Programación Frontend",
-    "nota":6
+    "dni":"29358120"
   }, {
     "nombre": "Haley",
     "apellido": "Proback",
     "edad": 34,
-    "dni":"51241268",
-    "curso":"Diseño UX/UI",
-    "nota":7
+    "dni":"51241268"
   }, {
     "nombre": "Michelina",
     "apellido": "Beaglehole",
     "edad": 34,
-    "dni":"24614567",
-    "curso":"Diseño UX/UI",
-    "nota":6
+    "dni":"24614567"
   }, {
     "nombre": "Jeralee",
     "apellido": "Postans",
     "edad": 26,
-    "dni":"97212450",
-    "curso":"Programación Frontend",
-    "nota":6
+    "dni":"97212450"
   }, {
     "nombre": "Jordain",
     "apellido": "Kerner",
     "edad": 35,
-    "dni":"41262234",
-    "curso":"Programación Backend",
-    "nota":5
+    "dni":"41262234"
   }, {
     "nombre": "Harriett",
     "apellido": "Skeene",
     "edad": 33,
-    "dni":"21245129",
-    "curso":"Programación Backend",
-    "nota":10
+    "dni":"21245129"
   }, {
     "nombre": "Andie",
     "apellido": "McIlrath",
     "edad": 20,
-    "dni":"59127389",
-    "curso":"Programación Frontend",
-    "nota":9
+    "dni":"59127389"
   }, {
     "nombre": "Sapphira",
     "apellido": "Arnholtz",
     "edad": 17,
-    "dni":"03128893",
-    "curso":"Programación Backend",
-    "nota":5
+    "dni":"03128893"
   }, {
     "nombre": "Terra",
     "apellido": "Wadsworth",
     "edad": 31,
-    "dni":"02213850",
-    "curso":"Diseño UX/UI",
-    "nota":10
+    "dni":"02213850"
   }]
 
-  app.get('/students/insertion',async (req,res)=>{
-    let result = await studentsModel.insertMany(students)
+  app.get('/users/insertion',async (req,res)=>{
+    let result = await usersModel.insertMany(users)
     res.send({result})
   })
-  app.get('/students',async(req,res)=>{
-    const result = await studentsModel.find();
+  app.get('/users',async(req,res)=>{
+    const result = await usersModel.find();
     res.send({students:result})
   })
 
-  app.post('/students',async(req,res)=>{
-    const {nombre,apellido,edad,dni,curso,nota} = req.body;
-    if(!nombre||!apellido||!edad||!dni||!curso||!nota) return res.status(400).send({error:"Incomplete values"});
+  app.post('/users',async(req,res)=>{
+    const {nombre,apellido,edad,dni} = req.body;
+    if(!nombre||!apellido||!edad||!dni) return res.status(400).send({error:"Incomplete values"});
     let user = {
         nombre,
         apellido,
         edad,
-        dni,
-        curso,
-        nota
+        dni
     }
-    let result = await studentsModel.create(user);
+    let result = await usersModel.create(user);
     res.send({result})
   })
   
-  app.put('/students/:sid',async(req,res)=>{
-    const id = req.params.sid;
-    const UpdateStudent = req.body;
-    let result = await studentsModel.updateOne({_id:id},{$set:UpdateStudent});
+  app.put('/users/:id',async(req,res)=>{
+    const id = req.params.id;
+    const UpdateUser = req.body;
+    let result = await usersModel.updateOne({_id:id},{$set:UpdateUser});
     res.send({result});
   })
 
-  app.delete('/students/:sid',async(req,res)=>{
-    const id= req.params.sid;
-    let result = await studentsModel.deleteOne({_id:id});
+  app.delete('/users/:id',async(req,res)=>{
+    const id= req.params.id;
+    let result = await usersModel.deleteOne({_id:id});
     res.send({result})
   })
