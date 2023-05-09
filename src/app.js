@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT||8080;
 const server = app.listen(PORT,()=>console.log(`Listening on ${PORT}`));
 
-const connection = mongoose.connect(`URL DE MONGO AQUÍ`)
+const connection = mongoose.connect(`mongodb+srv://CoderHouse:kramerxl1@alumnos.lgqy1er.mongodb.net/?retryWrites=true&w=majority`)
 app.use(express.json());
 
 const users = [{
